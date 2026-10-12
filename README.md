@@ -1,181 +1,101 @@
-# Bolu Bocool Backend - Multi-Gateway E-Commerce API
+# 🛍️ Bolubocool — Multi-Vendor Fashion & Retail E-Commerce API
 
 <p align="center">
-  <img src="assets/banner.svg" alt="bolubocool_backend Banner" width="100%">
+  <img src="./assets/banner.svg" alt="Architecture Banner" width="100%" />
 </p>
 
 <p align="center">
-  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node.js-20.x-green?style=for-the-badge&logo=node.js" alt="Node.js"></a>
-  <a href="https://expressjs.com"><img src="https://img.shields.io/badge/Express-4.21-black?style=for-the-badge&logo=express" alt="Express"></a>
-  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript"></a>
-  <a href="https://www.prisma.io"><img src="https://img.shields.io/badge/Prisma-6.x-2D3748?style=for-the-badge&logo=prisma" alt="Prisma"></a>
-  <a href="https://www.mongodb.com"><img src="https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb" alt="MongoDB"></a>
-  <a href="https://paystack.com"><img src="https://img.shields.io/badge/Paystack-00C3F9?style=for-the-badge" alt="Paystack"></a>
-  <a href="https://stripe.com"><img src="https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe" alt="Stripe"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-ISC-blue?style=for-the-badge" alt="License"></a>
+  <a href="https://www.postman.com/shahjalal-backend-9458759/shahjalal-api-portfolio/collection/48491387-f2eb4a11-5092-4a94-b7f0-983ece5b1c08">
+    <img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="height: 34px;" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://www.postman.com/shahjalal-backend-9458759/shahjalal-api-portfolio/collection/48491387-f2eb4a11-5092-4a94-b7f0-983ece5b1c08">
+    <img src="https://img.shields.io/badge/Postman-Interactive%20API%20Documentation-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman Documentation" />
+  </a>
+  &nbsp;&nbsp;
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  &nbsp;&nbsp;
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  &nbsp;&nbsp;
+  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
 </p>
 
 ---
 
-## 📖 Overview
+## 📌 Executive Overview
 
-**bolubocool_backend** is an enterprise e-commerce backend API engineered with Node.js, Express.js, TypeScript, and Prisma ORM with MongoDB. It features multi-gateway payment integrations (Stripe and Paystack), Topship automated cross-border African shipping logistics, product inventory lifecycle management, customer reviews, and DigitalOcean Spaces media hosting.
+Multi-vendor fashion e-commerce API featuring dual Paystack & Stripe checkout gateways, product sub-category catalogs, customer reviews, and order fulfillment tracking built with Node.js, Express, TypeScript, and Prisma.
 
----
-
-## ⚡ Key Features
-
-- 💳 **Dual Payment Gateways:** Seamless checkout supporting Stripe for global cards and Paystack for Nigerian & African accounts.
-- 🚚 **Topship Logistics Integration:** Automated rate fetching, shipping label generation, and tracking across African corridors.
-- 📦 **Product Catalog & Inventory:** SKU tracking, multi-variant products, categories, tags, and stock controls.
-- ⭐ **Verified Review System:** Customer ratings, verified purchase tags, and automated moderation.
-- ✉️ **Multi-Vendor Email Dispatch:** Transaction confirmations and order dispatch emails via Brevo and Mailgun relays.
-- ☁️ **DigitalOcean Spaces CDN:** AWS S3-compatible cloud storage for product photography.
+This microservice has been designed following enterprise software engineering standards, featuring clean modular service architecture, centralized error handling, robust JWT authorization, strict input validation, and comprehensive automated database models.
 
 ---
 
-## 🏗️ System Architecture
+## ⚡ Interactive API Documentation (Postman)
 
-```mermaid
-flowchart TD
-    Client[Web & Mobile Storefronts] -->|HTTPS REST| Router[Express Application Gateway]
+The entire API specification, complete with route headers, payload samples, and JWT authentication schemas, is published and directly accessible in the public Postman workspace:
 
-    subgraph Security ["Security & Guards"]
-        Router --> Auth[JWT Authentication Guard]
-        Router --> Val[Request Body Validation]
-    end
+👉 **[Launch Interactive Postman Workspace](https://www.postman.com/shahjalal-backend-9458759/shahjalal-api-portfolio/collection/48491387-f2eb4a11-5092-4a94-b7f0-983ece5b1c08)** *(No forking or sign-in required — instant browser reference)*
 
-    subgraph Commerce ["Commerce Services"]
-        Auth --> ProductMod[Product Catalog & Inventory]
-        Auth --> OrderMod[Order Management & Fulfillment]
-        Auth --> ReviewMod[Verified Customer Reviews]
-    end
-
-    subgraph PaymentsLogistics ["Payments & Logistics"]
-        OrderMod --> Stripe[Stripe Payment Engine]
-        OrderMod --> Paystack[Paystack Payment Engine]
-        OrderMod --> Topship[Topship Logistics API]
-    end
-
-    subgraph Persistence ["Persistence Layer"]
-        Commerce --> Prisma[Prisma ORM Client]
-        Prisma --> MongoDB[(MongoDB Cluster)]
-        Commerce --> DOSpaces[DigitalOcean Spaces S3]
-    end
-```
+- **Collection UID**: `48491387-f2eb4a11-5092-4a94-b7f0-983ece5b1c08`
+- **Workspace**: Shahjalal API Portfolio
+- **Environment**: Cloud Production / Local Docker Compose
 
 ---
 
-## 📂 Directory Structure
+## 🏗️ Architecture & Data Modeling
 
-```text
-.
-├── src/
-│   ├── app/
-│   ├── components/
-│   └── ...
-├── assets/
-│   └── banner.svg
-├── .env.example
-├── .gitignore
-├── package.json
-├── README.md
-└── LICENSE
-```
+The backend persistence layer is engineered with production database schemas:
 
----
-
-## 🛠️ Tech Stack & Dependencies
-
-| Layer / Library | Version | Description |
-|---|---|---|
-| **Express.js** | `v4.21` | HTTP routing and middleware framework |
-| **TypeScript** | `v5.x` | Type-safe backend architecture |
-| **Prisma ORM** | `v6.x` | MongoDB database abstraction and schema management |
-| **Stripe SDK** | `v17.x` | International credit/debit card processing |
-| **Paystack API** | `REST` | African payment gateway processing |
-| **Topship API** | `REST` | Cross-border African shipping & logistics |
-| **AWS SDK (S3 Client)** | `v3.x` | DigitalOcean Spaces file storage integration |
-
----
-
-## ⚙️ Environment Variables
-
-Create a `.env` file in the project root based on the provided sample:
-
-```bash
-cp .env.example .env
-```
-
-Configurable variables:
-
-```env
-PORT=3797
-NODE_ENV=development
-DATABASE_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/bolubocool?retryWrites=true&w=majority
-
-JWT_ACCESS_SECRET=your_jwt_access_secret
-JWT_REFRESH_SECRET=your_jwt_refresh_secret
-
-# Stripe
-STRIPE_SECRET_KEY=sk_test_your_stripe_key
-STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
-
-# Paystack
-PAYSTACK_SECRET_KEY=sk_test_your_paystack_key
-
-# Topship Logistics
-TOPSHIP_BASE_URL=https://topship-staging.africa/api
-TOPSHIP_API_KEY=your_topship_api_key
-
-# DigitalOcean Spaces
-DO_SPACE_ENDPOINT=https://nyc3.digitaloceanspaces.com
-DO_SPACE_ACCESS_KEY=your_access_key
-DO_SPACE_SECRET_KEY=your_secret_key
-DO_SPACE_BUCKET=bolubocool-storage
-```
+| Entity Model | Domain Responsibility |
+| :--- | :--- |
+| `Product / Category` | Fashion catalog inventory, sub-categories, variants, and stock |
+| `Order / OrderItem` | Customer shopping carts, multi-currency checkout, and order statuses |
+| `Transaction` | Payment gateway webhook verification for Paystack and Stripe |
+| `Review / Draft` | Verified buyer ratings, feedback comments, and unpublished drafts |
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 1. Prerequisites
+- **Node.js** v18.x or v20.x
+- **PostgreSQL** or **MongoDB** (refer to `.env.example`)
+- **Redis** (for BullMQ queues where applicable)
 
-- Node.js (v20.x or higher recommended)
-- Package Manager (`npm`, `yarn`, or `pnpm`)
-
-### Installation
-
+### 2. Installation & Setup
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/shahjalal-labs/bolubocool_backend.git
 cd bolubocool_backend
 
 # Install dependencies
 npm install
+
+# Configure environment variables
+cp .env.example .env
 ```
 
-### Running Locally
-
+### 3. Database Migration & Development
 ```bash
+# Generate database client
+npx prisma generate
+
+# Run database migrations
+npx prisma migrate dev
+
 # Start development server
 npm run dev
-# or for backend services
-npm run start:dev
-```
-
-### Building for Production
-
-```bash
-# Create production build
-npm run build
-
-# Start production server
-npm start
 ```
 
 ---
 
-## 📄 License
+## 👨‍💻 Engineering & Maintainer
 
-This project is licensed under the [ISC License](LICENSE).
+**Md. Shahjalal**  
+*Full Stack Software Engineer & Solutions Architect*  
+- **Email**: [muhommodshahjalal@gmail.com](mailto:muhommodshahjalal@gmail.com)  
+- **GitHub**: [@shahjalal-labs](https://github.com/shahjalal-labs)  
+- **Postman Portfolio**: [Shahjalal API Portfolio](https://www.postman.com/shahjalal-backend-9458759/shahjalal-api-portfolio)
+
+---
+<p align="center"><sub>Engineered with precision for production reliability and seamless scalability.</sub></p>
